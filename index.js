@@ -30,10 +30,16 @@ async function run() {
 
         const artCollection = client.db('artisanDB').collection('artisan')
 
-        app.post('/', async(req, res)=>{
-            const data=req.body
+        app.get('/artisan', async (req, res) => {
+            const cursor = artCollection.find()
+            const array = await cursor.toArray()
+            res.send(array)
+        })
+
+        app.post('/', async (req, res) => {
+            const data = req.body
             console.log(data)
-            const result= artCollection.insertOne(data)
+            const result = artCollection.insertOne(data)
             res.send(result)
         })
 
