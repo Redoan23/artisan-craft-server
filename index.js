@@ -28,8 +28,14 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
-        const artCollection=client.db('ArtisanDB').collection('artisan')
+        const artCollection = client.db('artisanDB').collection('artisan')
 
+        app.post('/', async(req, res)=>{
+            const data=req.body
+            console.log(data)
+            const result= artCollection.insertOne(data)
+            res.send(result)
+        })
 
 
 
