@@ -45,7 +45,7 @@ async function run() {
 
         app.get('/artisan/arts/:email', async (req, res) => {
             const email = req.params.email
-            const query = {email: email}
+            const query = { email: email }
             const cursor = await artCollection.find(query)
             const result = await cursor.toArray()
             res.send(result)
@@ -56,6 +56,13 @@ async function run() {
             const data = req.body
             console.log(data)
             const result = artCollection.insertOne(data)
+            res.send(result)
+        })
+
+        app.delete('/artisan/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await artCollection.deleteOne(query)
             res.send(result)
         })
 
