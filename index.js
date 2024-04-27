@@ -59,10 +59,26 @@ async function run() {
             res.send(result)
         })
 
-        app.put('/artisan/:id', (req, res)=>{
-            const id= req.params.id
-            const data=req.body
-            console.log(data, id)
+        app.put('/artisan/:id', async (req, res) => {
+            const id = req.params.id
+            const data = req.body
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: {
+
+                    photo: data.photo,
+                    itemName: data.itemName,
+                    subcategoryName: data.subcategoryName,
+                    description: data.description,
+                    price: data.price,
+                    rating: data.rating,
+                    customization: data.customization,
+                    status: data.status,
+                }
+            }
+            const result = await artCollection.updateOne(filter, updatedDoc, options)
+            res.send(result)
         })
 
         app.delete('/artisan/:id', async (req, res) => {
