@@ -46,10 +46,17 @@ async function run() {
         app.get('/artisan/arts/:email', async (req, res) => {
             const email = req.params.email
             const query = { email: email }
-            const cursor = await artCollection.find(query)
+            const cursor = artCollection.find(query)
             const result = await cursor.toArray()
             res.send(result)
+        })
 
+        app.get('/artisan/arts/check/:subcategory', async (req, res) => {
+            const name = req.params.subcategory
+            const query = { subcategoryName: name }
+            const cursor = artCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
         })
 
         app.post('/', async (req, res) => {
